@@ -1,3 +1,4 @@
+import {faker} from '@faker-js/faker';
 Cypress.Commands.add('login', () => {
   cy.visit('http://localhost:2368/ghost/');
  
@@ -13,8 +14,33 @@ Cypress.Commands.add('login', () => {
   cy.wait(2000);
 });
 
+// GIVEN: User is logged in
+describe('Crear nueva miembro ', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+    it('Crea una nuevo miembro', () => {
+    // THEN: User creates a new memeber
+    cy.visit('http://localhost:2368/ghost/#/members/new');
+    cy.wait(2000);
 
+    // WHEN: User types the known tag name "test"
+    const email = faker.internet.email();
+    cy.get('#member-name') // Target using data-test attribute
+    .type('miembro1');
+    cy.get('#member-email') // Target using data-test attribute
+    .type(email);
 
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The new tag with the known name "test" should be created
+
+    cy.contains('miembro1').should('be.visible');
+  });
+});
 
 // GIVEN: User is logged in
 describe('Crear nueva pagina ', () => {
