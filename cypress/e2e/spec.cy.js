@@ -14,6 +14,39 @@ Cypress.Commands.add('login', () => {
 });
 
 
+
+
+// GIVEN: User is logged in
+describe('Crear nueva pagina ', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User creates a new page with a name "test" content test
+  it('Crea una nueva pagina con el nombre "test"', () => {
+    cy.visit('http://localhost:2368/ghost/#/editor/page');
+    cy.wait(2000);
+
+    // WHEN: User types the known tag name "test"
+    
+    cy.get('[data-test-editor-title-input]') // Target using data-test attribute
+    .type('This is the page title');
+    cy.get('[data-koenig-dnd-container]') // Target using data-test attribute
+    .type('This is the page content');
+    
+    cy.contains('Publish').click();
+
+    cy.wait(5000);
+
+    // THEN: The new tag with the known name "test" should be created
+
+    cy.contains('Continue, final review').click();
+    cy.wait(2000);
+    cy.contains('Publish page, right now').click();
+  });
+});
+
 // GIVEN: User is logged in
 describe('Crear nueva etiqueta ', () => {
   beforeEach(() => {
