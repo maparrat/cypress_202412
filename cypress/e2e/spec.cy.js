@@ -13,6 +13,66 @@ Cypress.Commands.add('login', () => {
 
   cy.wait(2000);
 });
+// GIVEN: User is logged in
+describe('Validar filtros accesos  ', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User go to published pages
+  it('display tag created', () => {
+    cy.visit('http://localhost:2368/ghost/#/posts?type=published');
+    cy.wait(2000);
+
+    // WHEN: User types the visivility of the page
+    const url = faker.internet.url();
+    cy.get('[data-test-visibility-select]')
+    .click();
+
+
+    cy.wait(5000);
+
+    // THEN: Must show all the levels of access
+
+    cy.contains('All access');
+    cy.contains('Public');
+    cy.contains('Members-only');
+    cy.contains('Paid members-only');
+   
+  });
+});
+
+// GIVEN: User is logged in
+describe('Validar filtros miembros  ', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User go to published pages
+  it('display tag created', () => {
+    cy.visit('http://localhost:2368/ghost/#/posts?type=published');
+    cy.wait(2000);
+
+    // WHEN: User types the visivility of the page
+    const url = faker.internet.url();
+    cy.get('[data-test-type-select]')
+    .click();
+
+
+    cy.wait(5000);
+
+    // THEN: Must show all the levels of visibility
+
+    cy.contains('All posts');
+    cy.contains('Draft posts');
+    cy.contains('Published posts');
+    cy.contains('Email only posts');
+    cy.contains('Scheduled posts');
+    cy.contains('Featured posts');
+  });
+});
 
 // GIVEN: User is logged in
 describe('Crear nueva etiqueta ', () => {
