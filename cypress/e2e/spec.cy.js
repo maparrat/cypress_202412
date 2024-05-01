@@ -13,6 +13,66 @@ Cypress.Commands.add('login', () => {
 
   cy.wait(2000);
 });
+
+
+// GIVEN: User is logged in
+describe('Validar filtros autores  ', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User go to published pages
+  it('display tag created', () => {
+    cy.visit('http://localhost:2368/ghost/#/posts?type=published');
+    cy.wait(2000);
+
+    // WHEN: User types the author of the page
+    const url = faker.internet.url();
+    cy.get('[data-test-author-select]')
+    .click();
+
+
+    cy.wait(5000);
+
+    // THEN: Must show all the authors
+
+    cy.contains('All authors');
+ 
+
+  });
+});
+
+
+// GIVEN: User is logged in
+describe('Validar filtros recientes  ', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User go to published pages
+  it('display tag created', () => {
+    cy.visit('http://localhost:2368/ghost/#/posts?type=published');
+    cy.wait(2000);
+
+    // WHEN: User types the newest fist of the page
+    const url = faker.internet.url();
+    cy.get('[data-test-order-select]')
+    .click();
+
+
+    cy.wait(5000);
+
+    // THEN: Must show all the levels of recent added
+
+    cy.contains('Newest first');
+    cy.contains('Oldest first');
+    cy.contains('Recently updated');
+
+  });
+});
+
 // GIVEN: User is logged in
 describe('Validar filtros accesos  ', () => {
   beforeEach(() => {
