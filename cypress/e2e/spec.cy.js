@@ -4,7 +4,7 @@ Cypress.Commands.add('login', () => {
  
 
   cy.get('.email').type('pruebas@gmail.com'); 
-  cy.get('.password').type('123456789a'); 
+  cy.get('.password').type('f7m9R:Ng8K!EM!c');
 
   cy.get('button[type="submit"]').click();
   cy.wait(2000);
@@ -317,6 +317,239 @@ describe('Crear nueva pagina,mostrar  preview ', () => {
   });
 });
 
+describe('Validar filtro Published para posts', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  it('Debería mostrar las posts Published', () => {
+    cy.viewport(1536, 678)
+
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/posts?type=published')
+
+    cy.get('.gh-nav-body > .gh-nav-top > .gh-nav-list > .gh-nav-list-new > #ember24').click()
+
+    cy.get('.gh-nav-body > .gh-nav-top > .gh-nav-list > .gh-nav-list-new > #ember24').click()
+
+    cy.get('.gh-nav-body > .gh-nav-top > .gh-nav-list > .gh-nav-list-new > #ember24').click()
+
+    cy.get('.gh-nav-body > .gh-nav-top > .gh-nav-list > .gh-nav-list-new > #ember24').click()
+
+    cy.get('.view-actions > .gh-contentfilter > .gh-contentfilter-type > .ember-view > .ember-power-select-selected-item').click()
+
+
+    // Verificar que se muestren las posts en published
+    cy.contains('Published posts').should('be.visible');
+  });
+});
+
+describe('Validar filtro Draft para posts', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  it('Debería mostrar las posts Draft', () => {
+    cy.viewport(1536, 678)
+
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/posts?type=draft')
+
+    cy.get('.gh-nav-body > .gh-nav-top > .gh-nav-list > .gh-nav-list-new > #ember24').click()
+
+    cy.get('.gh-nav-body > .gh-nav-top > .gh-nav-list > .gh-nav-list-new > #ember24').click()
+
+    cy.get('.gh-nav-body > .gh-nav-top > .gh-nav-list > .gh-nav-list-new > #ember24').click()
+
+    cy.get('.gh-nav-body > .gh-nav-top > .gh-nav-list > .gh-nav-list-new > #ember24').click()
+
+    cy.get('.view-actions > .gh-contentfilter > .gh-contentfilter-type > .ember-view > .ember-power-select-selected-item').click()
+
+
+    // Verificar que se muestren las posts draft
+    cy.contains('Draft posts').should('be.visible');
+  });
+});
+
+describe('Validar filtro Scheduled para posts', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  it('Debería mostrar las posts Scheduled', () => {
+    cy.viewport(1536, 678)
+
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/posts?type=draft')
+
+    cy.get('.gh-nav-body > .gh-nav-top > .gh-nav-list > .gh-nav-list-new > #ember24').click()
+
+    cy.get('.gh-nav-body > .gh-nav-top > .gh-nav-list > .gh-nav-list-new > #ember24').click()
+
+    cy.get('.gh-nav-body > .gh-nav-top > .gh-nav-list > .gh-nav-list-new > #ember24').click()
+
+    cy.get('.gh-nav-body > .gh-nav-top > .gh-nav-list > .gh-nav-list-new > #ember24').click()
+
+    cy.get('.view-actions > .gh-contentfilter > .gh-contentfilter-type > .ember-view > .ember-power-select-selected-item').click()
+
+    // Verificar que se muestren las posts scheduled
+    cy.contains('Scheduled posts').should('be.visible');
+  });
+});
+describe('Validar filtro por titulo', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  it('Debería buscar post por titulo', () => {
+    cy.viewport(1536, 730);
+
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/posts?type=scheduled');
+
+    cy.get('.gh-nav > .flex > .gh-nav-menu > .gh-nav-menu-details > .gh-nav-menu-details-sitetitle').click();
+
+    cy.get('.gh-nav-menu > .gh-nav-menu-search > .gh-nav-btn-search > span > svg').click();
+
+    cy.get('.modal-content > .gh-nav-search-modal > .gh-nav-search-input > .ember-basic-dropdown > .ember-view').click();
+
+    cy.get('.gh-nav-search-modal > .gh-nav-search-input > .ember-basic-dropdown > .ember-view > .gh-input-with-select-input').click();
+
+    cy.get('.gh-nav-search-modal > .gh-nav-search-input > .ember-basic-dropdown > .ember-view > .gh-input-with-select-input').type('Coming soon');
+
+    // Presionar la tecla Enter
+    cy.get('.gh-nav-search-modal > .gh-nav-search-input > .ember-basic-dropdown > .ember-view > .gh-input-with-select-input').type('{enter}');
+
+
+  });
+});
+
+describe('Validate Recent Filters Pages', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  it('Debería mostrar los filtros recientes para las paginas', () => {
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/pages');
+    cy.get('#ember429').click();
+    cy.get('#ember537').click();
+    cy.get('.ember-basic-dropdown-trigger--left > .ember-power-select-selected-item').click();
+    cy.get('.ember-basic-dropdown-trigger--left > .ember-power-select-selected-item').click();
+    // mostrar los filtros recientes para las paginas
+    cy.wait(5000);
+
+
+    cy.contains('Newest');
+    cy.contains('Oldest');
+    cy.contains('Recently updated');
+  });
+});
+
+describe('Validar filtros accesos paginas', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  it('Debería  filtros accesos paginas', () => {
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/pages');
+    cy.get('#ember562').click();
+    cy.get('.ember-basic-dropdown-trigger--left > .ember-power-select-selected-item').click();
+    cy.get('.ember-basic-dropdown-trigger--left > .ember-power-select-selected-item').click();
+
+    cy.wait(2000);
+
+
+    cy.contains('All access');
+    cy.contains('Public');
+    cy.contains('Members-only');
+    cy.contains('Paid members-only');
+  });
+});
+
+describe('Validar filtro estado paginas', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  it('Debería  filtros estado paginas', () => {
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/pages');
+    cy.get('#ember562').click();
+    cy.get('#ember562').click();
+    cy.get('.ember-basic-dropdown-trigger--left > .ember-power-select-selected-item').click();
+
+    cy.wait(2000);
+
+
+    cy.contains('All posts');
+    cy.contains('Draft posts');
+    cy.contains('Published posts');
+    cy.contains('Scheduled posts');
+    cy.contains('Featured posts');
+  });
+});
+
+describe('Crear nuevo post y publicarlo', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  it('Debería  Crear un nuevo post y publicarlo', () => {
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/pages');
+    cy.get('#ember432').click();
+    cy.get('#ember701').click();
+    cy.get('#ember701').type('{backspace}');
+    cy.get('#ember701').type('{backspace}');
+    cy.get('#ember701').click();
+    cy.get('#ember701').type('Prueba Posts');
+    cy.get('span > div').click();
+    cy.get('.koenig-editor__editor').click();
+    cy.wait(2000);
+    cy.get('.stroke-middarkgrey').click();
+    cy.get('.koenig-editor__editor').click();
+    cy.get('.gh-editor-header .darkgrey > span').click();
+    cy.get('.gh-back-to-editor > span').click();
+  });
+});
+
+describe('Eliminar post', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  it('Debería  Eliminar posts', () => {
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/pages');
+    cy.get('#ember1198').click();
+    cy.get('.darkgrey:nth-child(2) > span').click();
+    cy.get('.gh-revert-to-draft > span').click();
+    cy.get('#ember1283').click();
+    cy.contains('Draft').should('be.visible');
+  });
+});
+
+describe('Crear post y programarlo', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  it('Debería Crear post y programarlo', () => {
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/pages');
+    cy.get('#ember1433').click();
+    cy.get('#ember1433').click();
+    cy.get('#ember1506').type('post schedule');
+    cy.get('.gh-koenig-editor-pane').click();
+    cy.get('.gh-editor-header .darkgrey > span').click();
+    cy.get('.last .gh-publish-setting-trigger > span').click();
+    cy.get('.active > label').click();
+    cy.get('.gh-revert-to-draft > span').click();
+
+  });
+});
 
 
 
